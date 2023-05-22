@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import RegistroForm, EditarUsuarioForm, AgregarAvatarForm
 from .models import Avatar
-
+from publicaciones.models import Publicacion
 
 def registrar_usuario(request):
     if request.method == 'POST':
@@ -82,6 +82,7 @@ def agregar_avatar(request):
 @login_required
 def ver_mi_perfil(request):
     user = request.user
+    publicaciones = Publicacion.objects.filter(creador=user)
     try:
         avatar = Avatar.objects.get(user=user)
     except ObjectDoesNotExist:
@@ -91,7 +92,8 @@ def ver_mi_perfil(request):
         'username': user.username,
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'email': user.email
+        'email': user.email,
+        'publicaciones':publicaciones,
     }
     return render(request, 'usuarios/perfil.html', context)
 
@@ -99,14 +101,16 @@ def ver_mi_perfil(request):
 def ver_perfil(request, username):
     user = get_object_or_404(User, username=username)
     avatar = Avatar.objects.get(user=user)
+    publicaciones = Publicacion.objects.filter(creador=user)
     context = {
         'avatar': avatar,
         'username': user.username,
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'email': user.email
+        'email': user.email,
+        'publicaciones':publicaciones,
     }
-    return render(request, 'usuarios/perfil.html', context)
+    return render(request, 'usuarios/perfil_autor.html', context)
 
 
 def cerrar_sesion(request):

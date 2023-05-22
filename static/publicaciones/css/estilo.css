@@ -33,9 +33,10 @@ nav .btn-custom {
 }
 
 .contenedor_publicaciones{
-    margin: 50px auto;
+    margin: 10vh auto;
     width: 70%;
     font-family: 'Roboto', sans-serif;
+    margin-bottom: 20vh;
 }
 
 .h3-publicaciones{
@@ -124,7 +125,43 @@ nav .btn-custom {
     object-fit: cover; 
 }
 
+.contenedor-info1 {
+    margin: 50px auto;
+    width: 70%;
+    padding: 50px;
+    font-family: 'Roboto', sans-serif;
+}
+
 /* agregar_avatar */
 #agregar_foto{
     margin-bottom: 40vh;
 }
+
+/* detalle_publicacion */
+.estilo-detalle{
+    margin-top: 10vh;
+    width: 70%;
+    box-shadow: 20px 20px 20px #00000033;
+    margin-bottom: 40vh;
+    padding: 20px;
+}
+
+.estilo-imagen-titulo .img-detalle{
+    height: auto;
+    width: 550px;
+    object-fit: cover; 
+}
+
+.estilo-imagen-titulo .titulo_detalle{
+    font-size: 60px;
+    text-align: center;
+    font-weight: bolder;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 2px 2px 2px #00000021;
+}
+
+.estilo-detalle .contenido-detalle{
+    margin-top: 30px;
+    font-size: 20px;
+}
+

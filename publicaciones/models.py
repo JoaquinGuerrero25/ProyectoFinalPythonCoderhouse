@@ -12,19 +12,12 @@ class Publicacion(models.Model):
         return self.titulo
 
 class EdicionPublicacion(models.Model):
-    publicacion = models.OneToOneField(Publicacion, on_delete=models.CASCADE)
-    editor = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    fecha_edicion = models.DateTimeField(auto_now=True)
-    contenido_nuevo = models.TextField()
-
+    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
+    contenido = models.TextField(blank=True, null=True)
+    fecha_edicion = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
-        return f"Edición de '{self.publicacion.titulo}' por {self.editor.username}"
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.editor = self.publicacion.creador
-        return super().save(*args, **kwargs)
+        return f'{self.publicacion.titulo} - {self.fecha_edicion}'
 
 class Comentario(models.Model):
     publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)

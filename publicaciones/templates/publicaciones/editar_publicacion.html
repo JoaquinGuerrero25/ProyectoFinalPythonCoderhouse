@@ -1,0 +1,12 @@
+{% extends 'publicaciones/base.html' %}
+
+{% block contenido %}
+    <div class="d-flex justify-content-center mi-formulario">
+        <form class="w-50" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2 class="text-center mb-4">Editar publicación</h2>
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </form>
+    </div>
+{% endblock contenido %}

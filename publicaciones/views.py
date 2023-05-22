@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView
 from .models import Publicacion, Comentario, EdicionPublicacion
-from .forms import PublicacionForm, ComentarioForm, EdicionPublicacionForm
+from .forms import PublicacionForm, ComentarioForm
 
 
 def listar_publicaciones(request):
@@ -27,51 +27,50 @@ def detalle_publicacion(request, pk):
 class crear_publicacion(LoginRequiredMixin, CreateView):
     model = Publicacion
     form_class = PublicacionForm
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('pages:lista_publicaciones')
     template_name = 'publicaciones/crear_publicacion.html'
+
     def form_valid(self, form):
-        self.request.session['creador_pk'] = self.request.user.pk
+        form.instance.creador = self.request.user
         messages.success(self.request, 'La publicación se ha creado correctamente.')
         return super().form_valid(form)
+
     def get_success_url(self):
         return self.success_url
 
-
-class EditarPublicacion(LoginRequiredMixin, UpdateView):
-    model = EdicionPublicacion
-    form_class = EdicionPublicacionForm
-    template_name = 'publicaciones/editar_publicacion.html'
-
-    def get_object(self, queryset=None):
-        publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
-        edicion_publicacion, _ = EdicionPublicacion.objects.get_or_create(publicacion=publicacion)
-        return edicion_publicacion
-
-    def form_valid(self, form):
-        form.instance.editor = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
-        return reverse('pages:detalle_publicacion', args=[publicacion.pk])
-
-    def dispatch(self, request, *args, **kwargs):
-        publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
-        if request.user != publicacion.creador:
+@login_required
+def editar_publicacion(request, pk):
+    publicacion = get_object_or_404(Publicacion, pk=pk, creador=request.user)
+    if request.method == 'POST':
+        form = PublicacionForm(request.POST, request.FILES, instance=publicacion)
+        if form.is_valid():
+            form.save()
+            EdicionPublicacion.objects.create(publicacion=publicacion, contenido=publicacion.contenido)
             return redirect('pages:detalle_publicacion', pk=publicacion.pk)
-        return super().dispatch(request, *args, **kwargs)
+    else:
+        form = PublicacionForm(instance=publicacion)
+    return render(request, 'Publicaciones/editar_publicacion.html', {'form': form})
+
+
+@login_required
+def eliminar_publicacion(request, pk):
+    publicacion = get_object_or_404(Publicacion, pk=pk, creador=request.user)
+    if request.method == 'POST':
+        publicacion.delete()
+        messages.success(request, 'La publicación se ha eliminado correctamente.')
+        return redirect('pages:lista_publicaciones')
+    else:
+        return redirect('pages:lista_publicaciones')
 
 class AgregarComentario(CreateView):
     model = Comentario
     form_class = ComentarioForm
     template_name = 'publicaciones/agregar_comentario.html'
-
     def form_valid(self, form):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
         form.instance.publicacion = publicacion
         form.instance.autor = self.request.user
         return super().form_valid(form)
-
     def get_success_url(self):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
         return reverse('pages:detalle_publicacion', args=[publicacion.pk])

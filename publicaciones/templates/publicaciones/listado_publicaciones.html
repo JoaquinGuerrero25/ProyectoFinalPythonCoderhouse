@@ -23,7 +23,7 @@
                                         <a href="{% url 'pages:detalle_publicacion' p.pk %}" class="btn btn-primary">Leer más</a>
                                     </div>
                                     <div class="card-footer text-muted">
-                                        Publicado por {{ p.autor.username }} el {{ p.fecha_publicacion|date:"d/m/Y" }}
+                                        Publicado por {{ p.creador.username }} el {{ p.fecha_publicacion|date:"d/m/Y" }}
                                     </div>
                                 </div>
                             </div>

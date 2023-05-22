@@ -7,39 +7,35 @@
             <div class="col-md-4">
                 <div class="text-center position-relative container">
                     <div class="image-container">
-                        {% if user.avatar.photo %}
-                            <img src="{{ user.avatar.photo.url }}" alt="Foto de perfil" class="rounded-circle avatar-image">
+                        {% if avatar.photo %}
+                            <img src="{{ avatar.photo.url }}" alt="Foto de perfil" class="rounded-circle avatar-image">
                         {% else %}
                             <img src="{% static 'usuarios/img/fotodeperfil.jpg' %}" alt="Foto de perfil predeterminada" class="rounded-circle avatar-image">
                         {% endif %}
-                        <a href="{% url 'perfil:agregar_avatar' %}" class="btn btn-primary btn-editar-perfil">
-                            <i class="fa-solid fa-camera"></i>
-                        </a>
                     </div>
-                    <h2 class="nombre-usuario">{{ user.username }}</h2>
+                    <h2 class="nombre-usuario">{{ username }}</h2>
                 </div>
             </div>
-            <div class="col-md-8 d-flex flex-column justify-content-center">
-                <h3 class="h3-info">Información</h3>
-                <p>Nombre: {{ user.first_name }}</p>
-                <p>Apellido: {{ user.last_name }}</p>
-                <p>Email: {{ user.email }}</p>
-                <div class="text-center">
-                    <a href="{% url 'perfil:editar_usuario' %}" class="btn btn-primary">Editar perfil</a>
+            <div class="col-md-8">
+                <div class="col-md-8 d-flex flex-column justify-content-center">
+                    <h3 class="h3-info">Información</h3>
+                    <p>Nombre: {{ user.first_name }}</p>
+                    <p>Apellido: {{ user.last_name }}</p>
+                    <p>Email: {{ user.email }}</p>
                 </div>
             </div>
         </div>
-        <div class="contenedor_publicaciones">  
-            <h3 class="h3-publicaciones">Publicaciones subidas por {{ user.username }}</h3>
+        <div class="contenedor-info1">
+            <h3 class="h3-publicaciones">Publicaciones subidas por {{ username }}</h3>
             {% if publicaciones %}
                 <div class="row">
                     {% for p in publicaciones %}
                         <div class="col-md-12 mb-4">
-                            <div class="card margen-iz-der">
+                            <div class="card">
                                 <div class="row no-gutters">
                                     {% if p.imagen %}
-                                        <div class="col-md-4 mx-auto">
-                                            <img class="card-img" src="{{ p.imagen.url }}" alt="{{ p.titulo }}" style="width: 100%;">
+                                        <div class="col-md-4">
+                                            <img class="card-img" src="{{ p.imagen.url }}" alt="{{ p.titulo }}">
                                         </div>
                                     {% endif %}
                                     <div class="col-md-8">
@@ -49,7 +45,7 @@
                                             <a href="{% url 'pages:detalle_publicacion' p.pk %}" class="btn btn-primary">Leer más</a>
                                         </div>
                                         <div class="card-footer text-muted">
-                                            Publicado por {{ p.creador.username }} el {{ p.fecha_publicacion|date:"d/m/Y" }}
+                                            Publicado por {{ p.autor }} el {{ p.fecha_publicacion|date:"d/m/Y" }}
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +55,7 @@
                 </div>
             {% else %}
                 <div class="d-flex justify-content-center align-items-center">
-                    <p class="alert alert-info my-4 text-center" style="width: 50%;">{{ mensaje }}</p>
+                    <p class="alert alert-info my-4 text-center" style="width: 50%;">No se han subido publicaciones.</p>
                 </div>
             {% endif %}
         </div>

@@ -1,0 +1,40 @@
+{% extends 'publicaciones/base.html' %}
+
+{% block contenido %}
+    <div class="d-flex justify-content-center mi-formulario">
+        <form class="w-50" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2 class="titulo-iniciar">Crear Publicación</h2>
+            <fieldset>
+                <div class="mb-3">
+                    {{ form.titulo.label_tag }}
+                    {{ form.titulo }}
+                    {% if form.titulo.errors %}
+                        {% for error in form.titulo.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    {{ form.contenido.label_tag }}
+                    {{ form.contenido }}
+                    {% if form.contenido.errors %}
+                        {% for error in form.contenido.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    {{ form.imagen.label_tag }}
+                    {{ form.imagen }}
+                    {% if form.imagen.errors %}
+                        {% for error in form.imagen.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
+    </div>
+{% endblock contenido %}

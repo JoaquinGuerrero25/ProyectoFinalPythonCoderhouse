@@ -7,10 +7,11 @@ class PublicacionForm(forms.ModelForm):
         model = Publicacion
         fields = ['titulo', 'contenido', 'imagen']
 
-class EdicionPublicacionForm(forms.ModelForm):
+class Formulario_Editar(forms.ModelForm):
     class Meta:
         model = EdicionPublicacion
-        fields = ['contenido_nuevo']
+        fields = ('contenido',)
+        labels = {'contenido': 'Contenido'}
 
 class ComentarioForm(forms.ModelForm):
     class Meta:
