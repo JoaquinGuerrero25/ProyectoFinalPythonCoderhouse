@@ -1,0 +1,40 @@
+{% extends 'publicaciones/base.html' %}
+
+{% block contenido %}
+    <div class="contenedor_publicaciones">
+        <div class="titulo-button">
+            <h2>Publicaciones</h2>
+        </div>
+        {% if publicaciones %}
+            <div class="row">
+                {% for p in publicaciones %}
+                    <div class="col-md-12 mb-4">
+                        <div class="card margen-iz-der">
+                            <div class="row no-gutters">
+                                {% if p.imagen %}
+                                    <div class="col-md-4 mx-auto">
+                                        <img class="card-img" src="{{ p.imagen.url }}" alt="{{ p.titulo }}" style="width: 100%;">
+                                    </div>
+                                {% endif %}
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ p.titulo }}</h5>
+                                        <p class="card-text">{{ p.contenido|truncatewords:15 }}{% if p.contenido|wordcount > 15 %}...{% endif %}</p>
+                                        <a href="{% url 'pages:detalle_publicacion' p.pk %}" class="btn btn-primary">Leer más</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        Publicado por {{ p.autor.username }} el {{ p.fecha_publicacion|date:"d/m/Y" }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="d-flex justify-content-center align-items-center">
+                <p class="alert alert-info my-4 text-center" style="width: 50%;">{{ mensaje }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock contenido %}

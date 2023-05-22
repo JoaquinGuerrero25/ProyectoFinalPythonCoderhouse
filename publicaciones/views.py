@@ -15,13 +15,13 @@ def listar_publicaciones(request):
     else:
         mensaje = 'No hay publicaciones creadas.'
         context = {'mensaje': mensaje}
-    return render(request, 'listado_publicaciones.html', context)
+    return render(request, 'publicaciones/listado_publicaciones.html', context)
 
 
 def detalle_publicacion(request, pk):
     publicacion = get_object_or_404(Publicacion, pk=pk)
     creador = publicacion.creador
-    return render(request, 'detalle_publicacion.html', {'publicacion': publicacion, 'creador': creador})
+    return render(request, 'publicaciones/detalle_publicacion.html', {'publicacion': publicacion, 'creador': creador})
 
 
 class crear_publicacion(LoginRequiredMixin, CreateView):
@@ -40,7 +40,7 @@ class crear_publicacion(LoginRequiredMixin, CreateView):
 class EditarPublicacion(LoginRequiredMixin, UpdateView):
     model = EdicionPublicacion
     form_class = EdicionPublicacionForm
-    template_name = 'editar_publicacion.html'
+    template_name = 'publicaciones/editar_publicacion.html'
 
     def get_object(self, queryset=None):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
@@ -53,18 +53,18 @@ class EditarPublicacion(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
-        return reverse('detalle_publicacion', args=[publicacion.pk])
+        return reverse('pages:detalle_publicacion', args=[publicacion.pk])
 
     def dispatch(self, request, *args, **kwargs):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
         if request.user != publicacion.creador:
-            return redirect('detalle_publicacion', pk=publicacion.pk)
+            return redirect('pages:detalle_publicacion', pk=publicacion.pk)
         return super().dispatch(request, *args, **kwargs)
 
 class AgregarComentario(CreateView):
     model = Comentario
     form_class = ComentarioForm
-    template_name = 'agregar_comentario.html'
+    template_name = 'publicaciones/agregar_comentario.html'
 
     def form_valid(self, form):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
@@ -74,4 +74,4 @@ class AgregarComentario(CreateView):
 
     def get_success_url(self):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
-        return reverse('detalle_publicacion', args=[publicacion.pk])
+        return reverse('pages:detalle_publicacion', args=[publicacion.pk])

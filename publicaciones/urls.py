@@ -1,6 +1,7 @@
 from django.urls import path
-
 from .views import listar_publicaciones, detalle_publicacion, crear_publicacion, EditarPublicacion, AgregarComentario
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'pages'
 
@@ -11,3 +12,6 @@ urlpatterns = [
     path('pages/<int:pk>/editar/', EditarPublicacion.as_view(), name='editar_publicacion'),
     path('pages/<int:pk>/comentario/', AgregarComentario.as_view(), name='agregar_comentario'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

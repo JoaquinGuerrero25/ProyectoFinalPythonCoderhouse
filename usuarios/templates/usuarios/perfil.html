@@ -1,0 +1,67 @@
+{% extends 'publicaciones/base.html' %}
+{% load static %}
+
+{% block contenido %}
+    <div class="row">
+        <div class="row contenedor-info">
+            <div class="col-md-4">
+                <div class="text-center position-relative container">
+                    <div class="image-container">
+                        {% if user.avatar.photo %}
+                            <img src="{{ user.avatar.photo.url }}" alt="Foto de perfil" class="rounded-circle avatar-image">
+                        {% else %}
+                            <img src="{% static 'usuarios/img/fotodeperfil.jpg' %}" alt="Foto de perfil predeterminada" class="rounded-circle avatar-image">
+                        {% endif %}
+                        <a href="{% url 'perfil:agregar_avatar' %}" class="btn btn-primary btn-editar-perfil">
+                            <i class="fa-solid fa-camera"></i>
+                        </a>
+                    </div>
+                    <h2 class="nombre-usuario">{{ user.username }}</h2>
+                </div>
+            </div>
+            <div class="col-md-8 d-flex flex-column justify-content-center">
+                <h3 class="h3-info">Información</h3>
+                <p>Nombre: {{ user.first_name }}</p>
+                <p>Apellido: {{ user.last_name }}</p>
+                <p>Email: {{ user.email }}</p>
+                <div class="text-center">
+                    <a href="{% url 'perfil:editar_usuario' %}" class="btn btn-primary">Editar perfil</a>
+                </div>
+            </div>
+        </div>
+        <div class="contenedor_publicaciones">  
+            <h3 class="h3-publicaciones">Publicaciones subidas por {{ user.username }}</h3>
+            {% if publicaciones %}
+                <div class="row">
+                    {% for p in publicaciones %}
+                        <div class="col-md-12 mb-4">
+                            <div class="card margen-iz-der">
+                                <div class="row no-gutters">
+                                    {% if p.imagen %}
+                                        <div class="col-md-4 mx-auto">
+                                            <img class="card-img" src="{{ p.imagen.url }}" alt="{{ p.titulo }}" style="width: 100%;">
+                                        </div>
+                                    {% endif %}
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ p.titulo }}</h5>
+                                            <p class="card-text">{{ p.contenido|truncatewords:15 }}{% if p.contenido|wordcount > 15 %}...{% endif %}</p>
+                                            <a href="{% url 'pages:detalle_publicacion' p.pk %}" class="btn btn-primary">Leer más</a>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            Publicado por {{ p.autor }} el {{ p.fecha_publicacion|date:"d/m/Y" }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="d-flex justify-content-center align-items-center">
+                    <p class="alert alert-info my-4 text-center" style="width: 50%;">No se han subido publicaciones.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock contenido %}

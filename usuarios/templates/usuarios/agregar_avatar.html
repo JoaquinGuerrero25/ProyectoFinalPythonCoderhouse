@@ -1,0 +1,23 @@
+{% extends 'publicaciones/base.html' %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+    <div class="d-flex justify-content-center mi-formulario" id="agregar_foto">
+        <form class="w-50" method="POST" enctype="multipart/form-data">
+            <h2 class="titulo-iniciar">Subir tu foto de perfil</h2>
+            {% csrf_token %}
+            <fieldset>
+                <div class="mb-3">
+                    {{ form.photo.label_tag }}
+                    {{ form.photo|add_class:'form-control' }}
+                    {% if form.photo.errors %}
+                        {% for error in form.photo.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+{% endblock contenido %}

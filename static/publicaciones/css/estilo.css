@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+/* font-family: 'Roboto', sans-serif; */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+}
+
+.bg-custom {
+    background-color: #F2F4F7;
+}
+
+nav a .titulo-principal{
+    font-family: 'Oswald', sans-serif;
+}
+
+nav .btn-custom {
+    margin-left: 10px;
+    padding: 8px;
+}
+
+/* listar_publicaciones */
+.contenedor_publicaciones .card-img {
+    width: 200px; 
+    height: 180px; 
+    object-fit: cover;
+}
+
+.contenedor_publicaciones{
+    margin: 50px auto;
+    width: 70%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.h3-publicaciones{
+    text-shadow: 2px 2px 2px #00000021;
+}
+
+/* pagina iniciar sesion */
+.mi-formulario{
+    width: 40%;
+    margin: 20vh auto;
+    padding: 50px;
+    border: solid 1px #00000005;
+    box-shadow: 27px 27px 27px #00000009;
+    margin-bottom: 30vh;
+}
+
+.mi-formulario h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-shadow: 5px 5px 5px #00000021;
+}
+
+.botones-container {
+    display: flex;
+    align-items: center;
+}
+
+.botones-container button {
+    height: 40px;
+    width: 90px;
+    margin-top: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    box-decoration-break: none;
+    box-shadow: 5px 5px 5px #00000033;
+}
+
+.botones-container a{
+    height: 40px;
+    width: 90px;
+    margin-top: 30px;
+    margin-right: 20px;
+}
+.alert{
+    margin-top: 10px;
+}
+
+/* perfil */
+.contenedor-info {
+    margin: 50px auto;
+    width: 70%;
+    padding: 50px;
+    box-shadow: -27px -27px 27px rgba(31, 30, 30, 0.016),
+                27px -27px 27px rgba(34, 34, 34, 0.016),
+                -27px 27px 27px rgba(36, 36, 36, 0.016),
+                27px 27px 27px rgba(39, 39, 39, 0.016);
+                font-family: 'Roboto', sans-serif;
+}
+.nombre-usuario{
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    margin-top: 10px;
+}
+
+.h3-info{
+    text-shadow: 2px 2px 2px #00000021;
+}
+
+.image-container {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.btn-editar-perfil {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.avatar-image {
+    width: 320px;  
+    height: 320px; 
+    object-fit: cover; 
+}
+
+/* agregar_avatar */
+#agregar_foto{
+    margin-bottom: 40vh;
+}

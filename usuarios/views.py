@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from .forms import RegistroForm, EditarUsuarioForm, AgregarAvatarForm
 from .models import Avatar
 
@@ -12,14 +15,19 @@ def registrar_usuario(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('inicio')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+            return redirect('pages:lista_publicaciones')
     else:
         form = RegistroForm()
-    return render(request, 'registro.html', {'form': form})
+    return render(request, 'usuarios/registro.html', {'form': form})
 
 
 class IniciarSesion(LoginView):
-    template_name = 'iniciar_sesion.html'
+    template_name = 'usuarios/iniciar_sesion.html'
     redirect_authenticated_user = True
     success_url = 'pages:lista_publicaciones'
 
@@ -35,29 +43,49 @@ def editar_usuario(request):
         form = EditarUsuarioForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('perfil')
+            return redirect('perfil:mi_perfil')
     else:
         form = EditarUsuarioForm(instance=user)
-    return render(request, 'editar_usuario.html', {'form': form})
+    return render(request, 'usuarios/editar_usuario.html', {'form': form})
+
+
+@login_required
+def cambiar_contrasena(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('perfil:mi_perfil')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'usuarios/cambiar_contrasena.html', {'form': form})
 
 
 @login_required
 def agregar_avatar(request):
     user = request.user
+    try:
+        avatar = Avatar.objects.get(user=user)
+    except Avatar.DoesNotExist:
+        avatar = Avatar(user=user)
     if request.method == 'POST':
-        form = AgregarAvatarForm(request.POST, request.FILES, instance=user.avatar)
+        form = AgregarAvatarForm(request.POST, request.FILES, instance=avatar)
         if form.is_valid():
             form.save()
-            return redirect('perfil')
+            return redirect('perfil:mi_perfil')
     else:
-        form = AgregarAvatarForm()
-    return render(request, 'agregar_avatar.html', {'form': form})
+        form = AgregarAvatarForm(instance=avatar)
+    return render(request, 'usuarios/agregar_avatar.html', {'form': form})
 
 
 @login_required
 def ver_mi_perfil(request):
     user = request.user
-    avatar = Avatar.objects.get(user=user)
+    try:
+        avatar = Avatar.objects.get(user=user)
+    except ObjectDoesNotExist:
+        avatar = None
     context = {
         'avatar': avatar,
         'username': user.username,
@@ -65,7 +93,7 @@ def ver_mi_perfil(request):
         'last_name': user.last_name,
         'email': user.email
     }
-    return render(request, 'perfil.html', context)
+    return render(request, 'usuarios/perfil.html', context)
 
 
 def ver_perfil(request, username):
@@ -78,4 +106,9 @@ def ver_perfil(request, username):
         'last_name': user.last_name,
         'email': user.email
     }
-    return render(request, 'perfil.html', context)
+    return render(request, 'usuarios/perfil.html', context)
+
+
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('pages:lista_publicaciones')

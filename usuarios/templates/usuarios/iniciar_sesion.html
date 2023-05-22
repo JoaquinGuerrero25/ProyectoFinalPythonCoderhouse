@@ -1,0 +1,22 @@
+{% extends 'publicaciones/base.html' %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+    <form class="mi-formulario" method="post">
+        <h2 class="titulo-iniciar">Iniciar sesión</h2>
+        {% csrf_token %}
+        {{ form.username.label_tag }}
+        {{ form.username|add_class:"form-control" }}
+        {{ form.password.label_tag }}
+        {{ form.password|add_class:"form-control" }}
+        {% if form.errors %}
+            <div class="alert alert-danger alerta-error" role="alert">
+                Usuario o contraseña inválidos.
+            </div>
+        {% endif %}
+        <div class="botones-container">
+            <button type="submit" class="btn btn-primary">Ingresar</button>
+            <a class="registrarse" href="{% url 'perfil:registro' %}">Registrarse</a>
+        </div>
+    </form>
+{% endblock contenido %}
