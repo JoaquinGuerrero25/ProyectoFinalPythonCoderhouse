@@ -1,0 +1,8 @@
+{% extends 'publicaciones/base.html' %}
+{% block contenido %}
+    {% if mensaje %}
+        <div class="alert alert-danger" role="alert" style="width: 40vh; margin: 30vh auto; margin-bottom: 50vh;">
+            {{ mensaje }}
+        </div>
+    {% endif %}
+{% endblock contenido %}

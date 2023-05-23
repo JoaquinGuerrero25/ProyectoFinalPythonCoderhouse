@@ -14,4 +14,5 @@ urlpatterns = [
     path('perfil/<str:username>/', views.ver_perfil, name='ver_perfil'),
     path('cerrar-sesion/', views.cerrar_sesion, name='cerrar_sesion'),
     path('cambiar-contrasena/', views.cambiar_contrasena, name='cambiar_contrasena'),
+    path('acerca-de-mi/', views.acerca_de_mi, name='acerca_de_mi'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

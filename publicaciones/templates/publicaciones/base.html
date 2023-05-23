@@ -22,13 +22,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'pages:crear_publicacion' %}">Crear Publicacion</a>
+                        <a class="nav-link active" href="{% url 'pages:lista_publicaciones' %}">Home</a>
                     </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'pages:crear_publicacion' %}">Crear Publicacion</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sobre Mi</a>
+                        <a class="nav-link" href="{% url 'perfil:acerca_de_mi' %}">Acerca de mí</a>
                     </li>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="buscar" aria-label="Search">
+                    <form class="d-flex" method="get" action="{% url 'pages:buscar_titulo' %}">
+                        <input class="form-control me-2" type="text" placeholder="buscar por titulo" aria-label="Search" name="q">
                         <button class="btn btn-outline-success bg-success text-white btn-custom" type="submit">Buscar</button>
                     </form>
                     {% if user.is_authenticated %}
@@ -75,7 +80,7 @@
                 <div class="col-lg-6">
                     <ul class="list-inline text-lg-end">
                         <li class="list-inline-item">
-                            <a href="#" class="text-light"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.linkedin.com/in/joaquín-guerrero-608617257" class="text-light"><i class="fab fa-linkedin"></i></a>
                         </li>
                         <li class="list-inline-item">
                             <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>

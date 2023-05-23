@@ -17,3 +17,6 @@ class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ['contenido']
+
+class Formulario_busqueda(forms.Form):
+    autor = forms.CharField(required=True, label='Nombre del autor', max_length=100)

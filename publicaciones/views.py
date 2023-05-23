@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView
 from .models import Publicacion, Comentario, EdicionPublicacion
-from .forms import PublicacionForm, ComentarioForm
+from .forms import PublicacionForm, ComentarioForm, Formulario_busqueda
 
 
 def listar_publicaciones(request):
@@ -74,3 +74,18 @@ class AgregarComentario(CreateView):
     def get_success_url(self):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
         return reverse('pages:detalle_publicacion', args=[publicacion.pk])
+
+
+def buscar_titulo(request):
+    if request.method == 'GET':
+        query = request.GET.get('q')
+        if not query:
+            mensaje = "Debe ingresar una palabra clave para buscar"
+            return render(request, 'publicaciones/buscar_por_titulo.html', {'mensaje': mensaje})
+        else:
+            publicaciones = Publicacion.objects.filter(titulo__icontains=query)
+            if publicaciones.exists():
+                return render(request, 'publicaciones/resultado_busqueda.html', {'publicaciones': publicaciones})
+            else:
+                mensaje = f"No se encontraron publicaciones con la palabra clave '{query}' en el título"
+                return render(request, 'publicaciones/buscar_por_titulo.html', {'mensaje': mensaje})

@@ -116,3 +116,7 @@ def ver_perfil(request, username):
 def cerrar_sesion(request):
     logout(request)
     return redirect('pages:lista_publicaciones')
+
+
+def acerca_de_mi(request):
+    return render(request, 'usuarios/acerca_de_mi.html')

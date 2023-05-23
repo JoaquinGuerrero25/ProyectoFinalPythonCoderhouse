@@ -33,10 +33,10 @@ nav .btn-custom {
 }
 
 .contenedor_publicaciones{
-    margin: 10vh auto;
+    margin: 15vh auto;
     width: 70%;
     font-family: 'Roboto', sans-serif;
-    margin-bottom: 20vh;
+    margin-bottom: 43vh;
 }
 
 .h3-publicaciones{
@@ -93,7 +93,7 @@ nav .btn-custom {
                 27px -27px 27px rgba(34, 34, 34, 0.016),
                 -27px 27px 27px rgba(36, 36, 36, 0.016),
                 27px 27px 27px rgba(39, 39, 39, 0.016);
-                font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 .nombre-usuario{
     font-family: 'Roboto', sans-serif;
@@ -165,3 +165,45 @@ nav .btn-custom {
     font-size: 20px;
 }
 
+/* acerca de mi */
+.contenedor-mi{
+    width: 80%;
+    margin: 15vh auto;
+}
+
+.titulo-mi{
+    font-size: 40px;
+    text-align: center;
+    font-weight: bolder;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 2px 2px 2px #00000021;
+}
+
+.imagen-mi-contenedor{
+    border: 1px solid #000;
+    width: 420px;
+    height: 570px;
+    background-color: #000000e3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 20px 20px 20px #00000080;
+}
+
+
+
+.icono-enlace {
+    margin-top: 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.icono-enlace:hover {
+    transform: scale(1.2);
+}
+
+.imagen-mi{
+    width: 370px;  
+    height: 370px; 
+    object-fit: cover;
+}

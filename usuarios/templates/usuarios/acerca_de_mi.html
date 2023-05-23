@@ -1,0 +1,30 @@
+{% extends 'publicaciones/base.html' %}
+{% load static %}
+
+{% block contenido %}
+    <div class="contenedor-mi">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="imagen-mi-contenedor">
+                    <img src="{% static 'usuarios/img/fotoacercademi.jpeg' %}" alt="Foto de perfil predeterminada" class="rounded-circle imagen-mi">
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.linkedin.com/in/joaquín-guerrero-608617257" class="text-light me-3 icono-enlace">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                        </a>
+                        <a href="https://github.com/JoaquinGuerrero25" class="text-light icono-enlace">
+                            <i class="fa-brands fa-github fa-2x" style="color: #ffffff;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="texto-mi">
+                    <h2 class="titulo-mi">Acerca de mí</h2>
+                    <p>
+                        Hola! mi nombre es Joaquin. Hace aproximadamente un año, comencé a desarrollar un profundo interés por el mundo de la programación. Actualmente, estoy enfocando mis esfuerzos en el desarrollo web y me estoy especializando en el lenguaje Python y en el desarrollo front-end. Mi objetivo es seguir adquiriendo conocimientos y habilidades en el campo del desarrollo web, colaborar en proyectos desafiantes y crear experiencias digitales impactantes. Gracias por visitar mi página!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock contenido %}
