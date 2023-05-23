@@ -3,9 +3,10 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView
 from .models import Publicacion, Comentario, EdicionPublicacion
-from .forms import PublicacionForm, ComentarioForm, Formulario_busqueda
+from .forms import PublicacionForm, ComentarioForm
+from django.views.generic import DeleteView
 
 
 def listar_publicaciones(request):
@@ -74,6 +75,15 @@ class AgregarComentario(CreateView):
     def get_success_url(self):
         publicacion = get_object_or_404(Publicacion, pk=self.kwargs['pk'])
         return reverse('pages:detalle_publicacion', args=[publicacion.pk])
+
+class EliminarComentario(LoginRequiredMixin, DeleteView):
+    model = Comentario
+    template_name = 'publicaciones/eliminar_comentario.html'
+    success_url = reverse_lazy('pages:detalle_publicacion')
+
+    def get_success_url(self):
+        publicacion_pk = self.object.publicacion.pk
+        return reverse_lazy('pages:detalle_publicacion', kwargs={'pk': publicacion_pk})
 
 
 def buscar_titulo(request):

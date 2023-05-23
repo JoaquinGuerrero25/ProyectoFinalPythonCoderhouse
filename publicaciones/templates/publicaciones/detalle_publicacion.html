@@ -28,6 +28,35 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'perfil:ver_perfil' publicacion.creador.username %}" class="btn btn-secondary">Ver perfil del autor</a>
                 {% endif %}
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'publicaciones:agregar_comentario' publicacion.pk %}" class="btn btn-primary">Agregar Comentario</a>
+                {% else %}
+                    <p>Para agregar un comentario, debes iniciar sesión.</p>
+                    <a href="{% url 'perfil:login' %}" class="btn btn-primary">Iniciar sesión</a>
+                {% endif %}
+                
+                <h3>Comentarios</h3>
+                {% for comentario in publicacion.comentario_set.all %}
+                    <div class="card">
+                        <div class="card-body">
+                            {% if user.is_authenticated %}
+                                <h5 class="card-title">
+                                    <a href="{% url 'perfil:ver_perfil' comentario.autor.username %}">{{ comentario.autor }}</a>
+                                </h5>
+                            {% else %}
+                            <h5 class="card-title">{{ comentario.autor }}</h5>
+                            {% endif %}
+                            <p class="card-text">{{ comentario.contenido }}</p>
+                            <p class="card-text">{{ comentario.fecha }}</p>
+                            {% if user.is_authenticated and user == comentario.autor %}
+                                <a href="{% url 'pages:eliminar_comentario' comentario.pk %}" class="btn btn-danger">Eliminar</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No hay comentarios aún.</p>
+                {% endfor %}
             </div>
         </div>
     </div>

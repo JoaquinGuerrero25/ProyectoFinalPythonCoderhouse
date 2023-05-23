@@ -1,0 +1,12 @@
+{% extends 'publicaciones/base.html' %}
+
+{% block contenido %}
+    <div class="d-flex justify-content-center mi-formulario">
+        <h2>Agregar Comentario</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Agregar Comentario</button>
+        </form>
+    </div>
+{% endblock contenido %}

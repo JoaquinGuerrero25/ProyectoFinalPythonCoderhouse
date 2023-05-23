@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import listar_publicaciones, detalle_publicacion, crear_publicacion, editar_publicacion, AgregarComentario, eliminar_publicacion, buscar_titulo
+from .views import listar_publicaciones, detalle_publicacion, crear_publicacion, editar_publicacion, AgregarComentario, eliminar_publicacion, buscar_titulo, EliminarComentario
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path('pages/crear/', crear_publicacion.as_view(), name='crear_publicacion'),
     path('pages/<int:pk>/editar/', editar_publicacion, name='editar_publicacion'),
     path('pages/<int:pk>/comentario/', AgregarComentario.as_view(), name='agregar_comentario'),
+    path('eliminar_comentario/<int:pk>/', EliminarComentario.as_view(), name='eliminar_comentario'),
     path('eliminar/<int:pk>/', eliminar_publicacion, name='eliminar_publicacion'),
     path('buscar/titulo/', buscar_titulo, name='buscar_titulo'),
 ]

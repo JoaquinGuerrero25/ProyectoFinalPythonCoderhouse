@@ -1,0 +1,12 @@
+{% extends 'publicaciones/base.html' %}
+
+{% block contenido %}
+<div class="d-flex justify-content-center mi-formulario">
+    <p>¿Estás seguro de que deseas eliminar este comentario?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'pages:detalle_publicacion' comentario.publicacion.pk %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock contenido %}
