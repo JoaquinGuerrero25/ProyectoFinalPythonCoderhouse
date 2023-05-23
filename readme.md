@@ -51,3 +51,14 @@ python manage.py createsuperuser
 ```
 127.0.0.1:8000/admin
 ```
+
+## Tests
+Los tests estan ubicados en las app
++ Para el tests de la app usuario:
+```
+python manage.py test usuarios.tests
+```
++ Para el tests de la app publicaciones:
+```
+python manage.py test publicaciones.tests
+```
