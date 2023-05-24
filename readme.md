@@ -62,3 +62,5 @@ python manage.py test usuarios.tests
 ```
 python manage.py test publicaciones.tests
 ```
+## Video
+https://youtu.be/U4rIuyFfXt8
